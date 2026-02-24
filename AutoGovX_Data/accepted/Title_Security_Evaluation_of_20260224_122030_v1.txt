@@ -1,0 +1,7 @@
+Title: Security Evaluation of Execution Guards
+
+Abstract:
+This paper evaluates runtime guard mechanisms in autonomous systems. The model was tested on a benchmark dataset of 12,000 samples.
+
+Results:
+The model achieved 87% accuracy on the dataset. The study demonstrates the importance of strict execution boundary enforcement.

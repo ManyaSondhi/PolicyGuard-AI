@@ -1,0 +1,19 @@
+Title: Benchmark Evaluation of Transformer Models on CIFAR-100
+
+Dataset:
+We used the publicly available CIFAR-100 dataset.
+
+Methodology:
+The model was trained using 5-fold cross validation.
+Hyperparameters were tuned using a validation split.
+
+Results:
+The proposed model achieved 91% accuracy on the dataset.
+Precision and recall values are reported for all classes.
+The results show improved performance compared to a ResNet baseline.
+
+Ethics:
+No human subject data was used.
+All experiments were conducted using open-source datasets.
+
+

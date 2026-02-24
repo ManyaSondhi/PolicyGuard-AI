@@ -1,0 +1,13 @@
+Title: Transformer-Based Scientific Risk Evaluation Framework
+
+Abstract:
+This research presents a transformer-based governance evaluation framework designed to assess scientific risk using structured policy-aware analysis. The system was evaluated on a curated dataset of 12,000 peer-reviewed research abstracts across multiple disciplines including AI, healthcare, and environmental sciences.
+
+Methodology:
+The model architecture integrates contextual embedding with rule-based governance scoring. A benchmark dataset was used to evaluate novelty detection, methodological robustness, and ethical compliance. Cross-validation was performed across five folds to ensure statistical reliability.
+
+Results:
+Experimental results demonstrate measurable improvements in evaluation consistency when compared to baseline rule-based systems. The system shows increased interpretability and improved reproducibility under controlled validation settings. Statistical analysis confirms performance gains across accuracy and precision metrics.
+
+Conclusion:
+The proposed governance-aware evaluation system enhances transparency in scientific review workflows and provides structured reasoning traces for decision support.

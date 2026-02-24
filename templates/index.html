@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AutoGov-X | Autonomous Governance Engine</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            margin: 0;
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            color: white;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .header {
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 36px;
+            margin: 0;
+            font-weight: 700;
+        }
+
+        .header p {
+            opacity: 0.7;
+            margin-top: 5px;
+        }
+
+        .card {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(12px);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        textarea {
+            width: 100%;
+            padding: 15px;
+            border-radius: 10px;
+            border: none;
+            background: rgba(255,255,255,0.08);
+            color: white;
+            min-height: 220px;
+            resize: vertical;
+        }
+
+        input[type="email"] {
+            width: 100%;
+            padding: 12px;
+            margin-top: 15px;
+            border-radius: 8px;
+            border: none;
+            background: rgba(255,255,255,0.08);
+            color: white;
+        }
+
+        label {
+            display: flex;
+            align-items: center;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        input[type="checkbox"] {
+            margin-right: 8px;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 12px 25px;
+            border-radius: 8px;
+            border: none;
+            background: linear-gradient(90deg, #3b82f6, #6366f1);
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+
+        .result-card {
+            margin-top: 30px;
+            padding: 25px;
+            border-radius: 16px;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        .accept { background: rgba(16,185,129,0.15); border: 1px solid #10b981; }
+        .reject { background: rgba(239,68,68,0.15); border: 1px solid #ef4444; }
+        .blocked { background: rgba(245,158,11,0.15); border: 1px solid #f59e0b; }
+
+        .badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .badge-success { background: #10b981; }
+        .badge-danger { background: #ef4444; }
+        .badge-warning { background: #f59e0b; }
+
+        .section-title {
+            margin-top: 20px;
+            font-weight: 600;
+            font-size: 18px;
+        }
+
+        ul {
+            padding-left: 18px;
+            opacity: 0.9;
+        }
+
+        pre {
+            background: rgba(0,0,0,0.4);
+            padding: 15px;
+            border-radius: 10px;
+            white-space: pre-wrap;
+            font-size: 13px;
+        }
+
+        .plan-box {
+            background: rgba(59,130,246,0.15);
+            padding: 12px;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .dashboard-link {
+            float: right;
+            font-size: 14px;
+            opacity: 0.8;
+            cursor: pointer;
+        }
+
+        .dashboard-link:hover {
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+
+    <div class="header">
+        <h1>🔬 AutoGov-X</h1>
+        <p>Intent-Aware Autonomous Scientific Governance Engine</p>
+        <span class="dashboard-link" onclick="window.location.href='/dashboard'">
+            📊 View Dashboard
+        </span>
+    </div>
+
+    <div class="card">
+        <form id="paperForm">
+            <textarea id="paper_text" placeholder="Paste your research paper here..." required></textarea>
+
+            <input type="email" id="author_email" placeholder="Author Email (for notification)" required>
+
+            <label>
+                <input type="checkbox" id="malicious_mode">
+                Simulate Malicious Execution Attempt
+            </label>
+
+            <button type="submit">Submit Paper</button>
+        </form>
+    </div>
+
+    <div id="output"></div>
+
+</div>
+
+<script>
+document.getElementById("paperForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    const data = {
+        paper_text: document.getElementById("paper_text").value,
+        email: document.getElementById("author_email").value,
+        malicious_mode: document.getElementById("malicious_mode").checked,
+        user_policy: {
+            allowed_actions: ["WRITE_FILE"],
+            allowed_directories: [
+                "C:/AutoGovX_Data/accepted",
+                "C:/AutoGovX_Data/rejected"
+            ],
+            max_risk_score: 10
+        }
+    };
+
+    const response = await fetch("/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+    });
+
+    if (!response.ok) {
+        document.getElementById("output").innerHTML =
+            `<div class="result-card blocked">⚠ Server Error: ${response.status}</div>`;
+        return;
+    }
+
+    const result = await response.json();
+
+    let decisionClass = "reject";
+    let badgeClass = "badge-danger";
+
+    if (result.execution_result.execution_status === "BLOCKED") {
+        decisionClass = "blocked";
+        badgeClass = "badge-warning";
+    } else if (result.final_decision === "ACCEPT") {
+        decisionClass = "accept";
+        badgeClass = "badge-success";
+    }
+
+    document.getElementById("output").innerHTML = `
+    <div class="result-card ${decisionClass}">
+        <h2>
+            Final Decision:
+            <span class="badge ${badgeClass}">
+                ${result.final_decision}
+            </span>
+        </h2>
+
+        <p><strong>Risk Score:</strong> ${result.policy_result.risk_score}</p>
+        <p><strong>Execution Status:</strong> ${result.execution_result.execution_status}</p>
+
+        ${result.execution_result.file_path ?
+            `<p><strong>Stored At:</strong> ${result.execution_result.file_path}</p>`
+            : "<p><strong>No file written.</strong></p>"
+        }
+
+        <div class="section-title">Execution Plan</div>
+        <div class="plan-box">
+            Action: ${result.execution_result.execution_plan?.action || "N/A"} <br>
+            Target: ${result.execution_result.execution_plan?.target_directory || "N/A"}
+        </div>
+
+        <div class="section-title">Policy Violations</div>
+        <ul>
+            ${(result.policy_result.violations || []).length > 0
+                ? result.policy_result.violations.map(v => `<li>${v}</li>`).join("")
+                : "<li>No violations</li>"
+            }
+        </ul>
+
+        <div class="section-title">Governance Summary</div>
+        <pre>${result.policy_result.governance_summary}</pre>
+    </div>
+    `;
+});
+</script>
+
+</body>
+</html>

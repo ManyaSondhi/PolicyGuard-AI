@@ -1,0 +1,13 @@
+Title: Automated Governance Validation Using Transformer Models
+
+Abstract:
+This research guarantees improved scientific review consistency through automated policy enforcement mechanisms. The proposed system was tested on a dataset of 8,000 validated research submissions from interdisciplinary journals.
+
+Methodology:
+The framework integrates structured claim extraction with dataset-driven validation scoring. The dataset includes labeled examples for novelty and compliance evaluation. Experimental analysis compares performance against traditional review workflows.
+
+Results:
+The system demonstrates stable evaluation performance and improved alignment with predefined governance standards.
+
+Conclusion:
+The framework provides a scalable infrastructure for intent-aware scientific governance.

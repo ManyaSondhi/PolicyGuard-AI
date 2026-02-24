@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AutoGov-X | Governance Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            color: white;
+            padding: 40px;
+        }
+
+        h1 {
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 20px;
+        }
+
+        .card {
+            background: rgba(255,255,255,0.05);
+            padding: 20px;
+            border-radius: 16px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h2 {
+            margin: 10px 0;
+            font-size: 28px;
+        }
+
+        .blue { border: 1px solid #3b82f6; }
+        .green { border: 1px solid #10b981; }
+        .red { border: 1px solid #ef4444; }
+        .yellow { border: 1px solid #f59e0b; }
+        .purple { border: 1px solid #a855f7; }
+        .orange { border: 1px solid #fb923c; }
+
+        table {
+            width: 100%;
+            margin-top: 40px;
+            border-collapse: collapse;
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background: rgba(255,255,255,0.1);
+        }
+
+        tr:nth-child(even) {
+            background: rgba(255,255,255,0.03);
+        }
+
+        .badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .accept { background: #10b981; }
+        .reject { background: #ef4444; }
+        .minor { background: #f59e0b; }
+        .major { background: #a855f7; }
+
+        .back {
+            margin-top: 30px;
+            display: inline-block;
+            color: #60a5fa;
+            cursor: pointer;
+        }
+
+        .back:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>📊 AutoGov-X Governance Dashboard</h1>
+
+<div class="grid">
+
+    <div class="card blue">
+        <h4>Total</h4>
+        <h2>{{ stats.total }}</h2>
+    </div>
+
+    <div class="card green">
+        <h4>Accepted</h4>
+        <h2>{{ stats.accepted }}</h2>
+    </div>
+
+    <div class="card red">
+        <h4>Rejected</h4>
+        <h2>{{ stats.rejected }}</h2>
+    </div>
+
+    <div class="card orange">
+        <h4>Minor Revision</h4>
+        <h2>{{ stats.minor }}</h2>
+    </div>
+
+    <div class="card purple">
+        <h4>Major Revision</h4>
+        <h2>{{ stats.major }}</h2>
+    </div>
+
+    <div class="card yellow">
+        <h4>Avg Risk</h4>
+        <h2>{{ stats.avg_risk }}</h2>
+    </div>
+
+</div>
+
+<h2 style="margin-top:50px;">Recent Submissions</h2>
+
+<table>
+    <tr>
+        <th>Title</th>
+        <th>Decision</th>
+        <th>Risk</th>
+        <th>Email</th>
+        <th>Timestamp</th>
+    </tr>
+
+    {% for row in stats.recent %}
+    <tr>
+        <td>{{ row[0] }}</td>
+        <td>
+            <span class="badge 
+                {% if row[1]=='ACCEPT' %}accept
+                {% elif row[1]=='REJECT' %}reject
+                {% elif row[1]=='MINOR REVISION' %}minor
+                {% elif row[1]=='MAJOR REVISION' %}major
+                {% endif %}">
+                {{ row[1] }}
+            </span>
+        </td>
+        <td>{{ row[2] }}</td>
+        <td>{{ row[3] }}</td>
+        <td>{{ row[4] }}</td>
+    </tr>
+    {% endfor %}
+
+</table>
+
+<div class="back" onclick="window.location.href='/'">
+    ← Back to Submission
+</div>
+
+</body>
+</html>

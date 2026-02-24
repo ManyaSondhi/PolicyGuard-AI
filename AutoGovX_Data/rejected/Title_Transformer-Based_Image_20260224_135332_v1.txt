@@ -1,0 +1,16 @@
+Title: Transformer-Based Image Classification with Dataset Validation
+
+Abstract:
+We propose a transformer-based architecture evaluated on a publicly available dataset containing 12,000 labeled images across 20 categories.
+
+Methods:
+The model was trained using 5-fold cross-validation and evaluated on a held-out test set. Standard accuracy and F1-score metrics were used. All hyperparameters are documented.
+
+Results:
+Our model achieved 91% accuracy and 0.89 F1-score. Comparative analysis against CNN baselines shows consistent improvements.
+
+Dataset:
+The dataset used is CIFAR-100, publicly available and fully documented.
+
+Conclusion:
+We demonstrate improved contextual feature learning under controlled evaluation conditions.
