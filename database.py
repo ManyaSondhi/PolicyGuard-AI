@@ -2,11 +2,19 @@ import sqlite3
 import os
 from datetime import datetime
 
-DB_PATH = "C:/AutoGovX_Data/database.db"
+# 🔥 Define base directory properly
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+# 🔥 Data folder inside project
+DATA_DIR = os.path.join(BASE_DIR, "AutoGovX_Data")
+
+# 🔥 Final database path
+DB_PATH = os.path.join(DATA_DIR, "database.db")
 
 
 def init_db():
-    os.makedirs("C:/AutoGovX_Data", exist_ok=True)
+    # Create folder if not exists
+    os.makedirs(DATA_DIR, exist_ok=True)
 
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
@@ -28,7 +36,6 @@ def init_db():
 
 
 def insert_submission(title, decision, risk_score, email, file_path):
-
     conn = sqlite3.connect(DB_PATH, timeout=20)
     cursor = conn.cursor()
 

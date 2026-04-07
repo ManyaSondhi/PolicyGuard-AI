@@ -5,8 +5,8 @@ from email.mime.multipart import MIMEMultipart
 SMTP_SERVER = "smtp.gmail.com"
 SMTP_PORT = 587
 
-SENDER_EMAIL = "yourmail@gmail.com"      # <-- PUT YOUR GMAIL
-APP_PASSWORD = "abcdefghijklmnop"      # <-- PUT 16 CHAR APP PASSWORD
+SENDER_EMAIL = "put_your_email@gmail.com"      # <-- PUT YOUR GMAIL
+APP_PASSWORD = "put_your_app_password"      # <-- PUT 16 CHAR APP PASSWORD
 
 
 def send_email(recipient_email, title, decision, risk_score):

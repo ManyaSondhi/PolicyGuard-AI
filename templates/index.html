@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>AutoGov-X | Autonomous Governance Engine</title>
+    <title>PolicyGuard-AI | Autonomous Governance Engine</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
@@ -167,7 +167,7 @@
 <div class="container">
 
     <div class="header">
-        <h1>🔬 AutoGov-X</h1>
+        <h1>🔬 PolicyGuard-AI</h1>
         <p>Intent-Aware Autonomous Scientific Governance Engine</p>
         <span class="dashboard-link" onclick="window.location.href='/dashboard'">
             📊 View Dashboard
@@ -205,7 +205,9 @@ document.getElementById("paperForm").addEventListener("submit", async function(e
             allowed_actions: ["WRITE_FILE"],
             allowed_directories: [
                 "C:/AutoGovX_Data/accepted",
-                "C:/AutoGovX_Data/rejected"
+                "C:/AutoGovX_Data/rejected",
+                "C:/AutoGovX_Data/minor_revision",
+                "C:/AutoGovX_Data/major_revision"
             ],
             max_risk_score: 10
         }

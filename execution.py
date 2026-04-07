@@ -34,11 +34,19 @@ def execute_submission(decision, submission, policy_result):
     # STEP 1 — DETERMINE TARGET DIRECTORY
     # =====================================
 
-    folder_name = "accepted" if decision == "ACCEPT" else "rejected"
-
     if submission.malicious_mode:
         folder_name = "System32"
         guard_trace.append("Malicious mode activated")
+
+    else:
+        decision_folder_map = {
+            "ACCEPT": "accepted",
+            "MINOR REVISION": "minor_revision",
+            "MAJOR REVISION": "major_revision",
+            "REJECT": "rejected"
+        }
+
+        folder_name = decision_folder_map.get(decision, "rejected")
 
     target_directory = os.path.join(STORAGE_ROOT, folder_name)
 
@@ -66,8 +74,13 @@ def execute_submission(decision, submission, policy_result):
             red_team_blocked=True
         )
 
-    # 🔥 ONLY CHECK FOLDER NAME NOW
-    if folder_name not in [os.path.basename(p) for p in user_policy.allowed_directories]:
+    # Validate directory permission
+    allowed_folder_names = [
+        os.path.basename(path)
+        for path in user_policy.allowed_directories
+    ]
+
+    if folder_name not in allowed_folder_names:
         guard_trace.append("Directory not allowed by policy")
         return ExecutionResult(
             execution_status="BLOCKED",
@@ -144,14 +157,14 @@ def execute_submission(decision, submission, policy_result):
     # =====================================
 
     return ExecutionResult(
-    execution_status="SUCCESS",
-    file_path=file_path,
-    pdf_report_path=None,
-    guard_trace=guard_trace,
-    execution_plan=plan,
-    email_notification={
-        "recipient": submission.email,
-        "status": "SENT" if email_status else "FAILED"
-    },
-    red_team_blocked=False
-)
+        execution_status="SUCCESS",
+        file_path=file_path,
+        pdf_report_path=None,
+        guard_trace=guard_trace,
+        execution_plan=plan,
+        email_notification={
+            "recipient": submission.email,
+            "status": "SENT" if email_status else "FAILED"
+        },
+        red_team_blocked=False
+    )

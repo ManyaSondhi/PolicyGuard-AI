@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>AutoGov-X | Governance Dashboard</title>
+    <title>PolicyGuard-AI | Governance Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
         body {
@@ -39,7 +40,7 @@
 
         .card h2 {
             margin: 10px 0;
-            font-size: 28px;
+            font-size: 26px;
         }
 
         .blue { border: 1px solid #3b82f6; }
@@ -49,9 +50,23 @@
         .purple { border: 1px solid #a855f7; }
         .orange { border: 1px solid #fb923c; }
 
+        .chart-section {
+            margin-top: 50px;
+            background: rgba(255,255,255,0.05);
+            padding: 25px;
+            border-radius: 16px;
+        }
+
+        canvas {
+            margin-top: 20px;
+            background: rgba(255,255,255,0.02);
+            border-radius: 12px;
+            padding: 10px;
+        }
+
         table {
             width: 100%;
-            margin-top: 40px;
+            margin-top: 50px;
             border-collapse: collapse;
             background: rgba(255,255,255,0.05);
             border-radius: 12px;
@@ -98,7 +113,7 @@
 
 <body>
 
-<h1>📊 AutoGov-X Governance Dashboard</h1>
+<h1>📊 PolicyGuard-AI Governance Dashboard</h1>
 
 <div class="grid">
 
@@ -134,6 +149,12 @@
 
 </div>
 
+<!-- Analytics Section -->
+<div class="chart-section">
+    <h2>📈 Decision Distribution Analytics</h2>
+    <canvas id="decisionChart"></canvas>
+</div>
+
 <h2 style="margin-top:50px;">Recent Submissions</h2>
 
 <table>
@@ -149,7 +170,7 @@
     <tr>
         <td>{{ row[0] }}</td>
         <td>
-            <span class="badge 
+            <span class="badge
                 {% if row[1]=='ACCEPT' %}accept
                 {% elif row[1]=='REJECT' %}reject
                 {% elif row[1]=='MINOR REVISION' %}minor
@@ -163,12 +184,40 @@
         <td>{{ row[4] }}</td>
     </tr>
     {% endfor %}
-
 </table>
 
 <div class="back" onclick="window.location.href='/'">
     ← Back to Submission
 </div>
+
+<script>
+    const accepted = Number("{{ stats.accepted }}");
+    const minor = Number("{{ stats.minor }}");
+    const major = Number("{{ stats.major }}");
+    const rejected = Number("{{ stats.rejected }}");
+
+    const ctx = document.getElementById('decisionChart').getContext('2d');
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Accept', 'Minor', 'Major', 'Reject'],
+            datasets: [{
+                label: 'Number of Submissions',
+                data: [accepted, minor, major, rejected]
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: { beginAtZero: true }
+            },
+            plugins: {
+                legend: { display: false }
+            }
+        }
+    });
+</script>
 
 </body>
 </html>
