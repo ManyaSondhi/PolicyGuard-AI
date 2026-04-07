@@ -102,16 +102,21 @@ Risk distribution
 Average risk score
 Activity logs
 
-## 🖼️ Screenshots
+]## 🖼️ Preview
 
-### Dashboard
+### 🔹 User Interface
+![Interface](screenshots/interface.png)
+
+### 🔹 Accepted Execution Output
+![Accept](screenshots/Accept.png)
+
+### 🔹 Major Revision Case
+![Major Revision](screenshots/major-revision.png)
+
+### 🔹 Dashboard Overview
 ![Dashboard](screenshots/dashboard.png)
 
-### Risk Analysis
-![Risk](screenshots/risk-analysis.png)
 
-### Execution Flow
-![Flow](screenshots/execution-flow.png)
 
 🧪 Use Cases
 AI governance systems
@@ -125,6 +130,36 @@ Database: SQLite
 AI: LLM integration
 Frontend: Dashboard UI
 Services: Email notifications
+
+## 🚀 How to Run the Project
+
+### 🔹 Prerequisites
+Make sure you have:
+- Python (>= 3.8)
+- pip
+- Git
+
+---
+
+### 🔹 1. Clone the Repository
+```bash
+git clone https://github.com/ManyaSondhi/PolicyGuard-AI.git
+cd PolicyGuard-AI
+```
+2. Install Dependencies
+pip install -r requirements.txt
+
+3.Setup Environment Variables
+
+Create a .env file in the root directory:
+
+EMAIL_USER=your_email@gmail.com
+EMAIL_PASS=your_app_password
+
+⚠️ Use Gmail App Password (not your real password)
+
+🔹 4. Run the Backend Server
+uvicorn main:app --reload
 
 ## 👩‍💻 Author
 Manya Sondhi
