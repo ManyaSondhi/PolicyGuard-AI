@@ -3,7 +3,7 @@
 
 <p align="center">
   <b>⚖️ Enforce • 🛡️ Secure • 🤖 Govern AI Systems</b><br><br>
-  <i>Built by Team HackSqad | Chandigarh University</i>
+  
 </p>
 
 ---
